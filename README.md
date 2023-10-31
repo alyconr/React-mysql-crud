@@ -3,7 +3,7 @@
  </div>
 
 
-This is a
+This README provides a step-by-step guide to building a CRUD (Create, Read, Update, Delete) application for managing NBA player posters. The app is built using Vite as the front-end framework, React Router for routing, MySQL for the database, and styled-components for styling. The backend utilizes custom API error handling, controllers for CRUD operations, and routes.
 
 ## Table of Contents
 
@@ -17,9 +17,10 @@ This is a
 8. [API Endpoints](#api-endpoints)
 9. [Deployment](#deployment)
 10. [Technologies Used](#technologies-used)
-11. [Contributing](#contributing)
-12. [License](#license)
-13. [Documentation](#documentation)
+11. [Author](#author)
+12. [Contributing](#contributing)
+13. [License](#license)
+14. [Documentation](#documentation)
 
 ## Features
 
@@ -173,6 +174,12 @@ frontend
 7. Express
 8. http-status-codes
 9. cors
+
+## 👤 Author
+
+
+- GitHub: [@alyconr](https://github.com/alyconr)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/jeysson-aly-contreras/)
 
 ## Contributing
 
