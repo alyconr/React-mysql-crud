@@ -178,6 +178,7 @@ frontend
 
 If you would like to contribute to the project, please read the [Contributing Guide](https://github.com/alyconr/NodeJs-Jobs-Api/blob/main/CONTRIBUTING.md).
 
+
 ## License
 
 This project is licensed under the MIT License.
