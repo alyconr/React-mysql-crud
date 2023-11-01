@@ -148,7 +148,7 @@ const AddPlayer = styled.button`
 `;
 
 const ErrorMessage = styled.p`
-  color: red;
+  color: #FC0313;
   font-weight: bold;
   font-size: 15px;
 `;
