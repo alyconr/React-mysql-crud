@@ -1,43 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { useParams } from "react-router-dom";
+
 const Update = () => {
-  const [players, setPlayers] = useState({
-    name: "",
-    description: "",
-    position: "",
-    team: "",
-    price: "",
-    image: "",
-  });
+  const [playerData, setPlayerData] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
   const { id } = useParams();
 
+  useEffect(() => {
+    async function fetchPlayerData() {
+      try {
+        const response = await axios.get(`http://localhost:5000/players/${id}`);
+        const playerObject = response.data[0];
+        setPlayerData(playerObject);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchPlayerData();
+  }, [id]);
+
   const handleChange = (e) => {
-    setPlayers({
-      ...players,
-      [e.target.name]: e.target.value,
+    const { name, value } = e.target;
+    setPlayerData({
+      ...playerData,
+      [name]: value,
     });
   };
 
   const handleClick = async (e) => {
     e.preventDefault();
-
-    if (Object.values(players).some((field) => field === "")) {
+    if (
+      !playerData.name ||
+      !playerData.description ||
+      !playerData.position ||
+      !playerData.team ||
+      !playerData.price ||
+      !playerData.image
+    ) {
       setErrorMessage("Please fill in all fields");
       return;
     }
 
     try {
-      await axios.put(`http://localhost:5000/players/${id}`, players);
+      await axios.put(`http://localhost:5000/players/${id}`, playerData);
       navigate("/");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const cancel = () => {
+    navigate("/");
   };
 
   return (
@@ -49,36 +68,52 @@ const Update = () => {
           placeholder="Player Name"
           onChange={handleChange}
           name="name"
+          value={playerData.name || ""}
         />
         <Textarea
           type="text"
           placeholder="Description"
           onChange={handleChange}
           name="description"
+          value={playerData.description || ""}
         />
         <Input
           type="text"
           placeholder="Position"
           onChange={handleChange}
           name="position"
+          value={playerData.position || ""}
         />
         <Input
           type="text"
           placeholder="Team"
           onChange={handleChange}
           name="team"
+          value={playerData.team || ""}
         />
-        <Input type="number" placeholder="Price" />
+        <Input
+          type="number"
+          placeholder="Price"
+          onChange={handleChange}
+          name="price"
+          value={playerData.price || ""}
+        />
         <Input
           type="text"
           placeholder="Image"
           onChange={handleChange}
           name="image"
+          value={playerData.image || ""}
         />
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-        <Edit type="submit" onClick={handleClick}>
-          Update Player
-        </Edit>
+        <Actons>
+          <Edit type="submit" onClick={handleClick}>
+            Update Player
+          </Edit>
+          <Cancel type="button" onClick={cancel}>
+            Cancel
+          </Cancel>
+        </Actons>
       </Form>
     </Container>
   );
@@ -122,11 +157,29 @@ const Textarea = styled.textarea`
   width: 300px;
 `;
 
+const Actons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 300px;
+`;
+
 const Edit = styled.button`
   padding: 10px;
   border: none;
   border-radius: 5px;
   background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+  width: 120px;
+  margin-top: 20px;
+  font-size: 15px;
+`;
+
+const Cancel = styled.button`
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #ff0000;
   color: #fff;
   cursor: pointer;
   width: 120px;
