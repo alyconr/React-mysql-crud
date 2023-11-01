@@ -19,6 +19,20 @@ const getAllPlayers = async (req, res) => {
     });
 }
 
+const getPlayer = async (req, res) => {
+    const sql = 'SELECT * FROM players WHERE id = ?';
+    const values = [req.params.id];
+
+    pool.query(sql, values, (queryError, results) => {
+        if (queryError) {
+            console.error('Database query error:', queryError);
+            res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: 'Database query error' });
+        } else {
+            res.status(StatusCodes.OK).json(results);
+        }
+    });
+}
+
 const addPlayer = async (req, res) => {
     if (validateFields(req)) {
         res.status(StatusCodes.BAD_REQUEST).json({ error: 'All fields are required' });
@@ -73,6 +87,7 @@ const updatePlayer = async (req, res) => {
 
 module.exports = {
     getAllPlayers,
+    getPlayer,
     addPlayer,
     deletePlayer,
     updatePlayer
